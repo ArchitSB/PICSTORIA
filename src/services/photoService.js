@@ -1,4 +1,32 @@
 const axios = require('axios');
+const { Photo, SearchHistory } = require('../../models');
+const { Op } = require('sequelize');
+
+
+
+const searchPhotosByTag = async (tag, sort = 'ASC', userId = null) => {
+    // Log search history if userId is provided
+    if (userId) {
+        await SearchHistory.create({
+            userId,
+            query: tag
+        });
+    }
+
+    // Search photos with the given tag
+    const photos = await Photo.findAll({
+        where: {
+            tags: {
+                [Op.contains]: [tag]
+            }
+        },
+        order: [['createdAt', sort]],
+        attributes: ['id', 'imageUrl', 'description', 'tags', 'createdAt']
+    });
+
+    return photos;
+};
+
 
 const searchImages = async (query) => {
     if (!process.env.UNSPLASH_ACCESS_KEY) {
@@ -30,5 +58,6 @@ const searchImages = async (query) => {
 };
 
 module.exports = {
-    searchImages
+    searchImages,
+    searchPhotosByTag
 };

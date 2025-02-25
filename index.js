@@ -2,6 +2,7 @@ const express = require('express');
 const { sequelize } = require('./models');
 const userRoutes = require('./src/routes/userRoutes');
 const photoRoutes = require('./src/routes/photoRoutes');
+const searchHistoryRoutes = require('./src/routes/searchHistoryRoutes');
 const path = require("path");
 const cors = require("cors");
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/api/users', userRoutes);
 app.use('/api/photos', photoRoutes);
+app.use('/api/search-history', searchHistoryRoutes);
 
 const PORT = process.env.PORT || 3000;
 
