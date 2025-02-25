@@ -92,8 +92,7 @@ const searchByTag = async (req, res) => {
         if (userId) {
             await SearchHistory.create({
                 userId,
-                query: tags,
-                timestamp: new Date()
+                query: tags
             });
         }
 
@@ -105,6 +104,12 @@ const searchByTag = async (req, res) => {
             },
             order: [['createdAt', sort]]
         });
+
+        if (!photos.length) {
+            return res.status(404).json({
+                message: 'No photos found with the specified tag'
+            });
+        }
 
         return res.json({
             photos: photos.map(photo => ({

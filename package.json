@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles --forceExit --setupFilesAfterEnv=./src/tests/jest.setup.js"
   },
   "author": "Archit Singh Baghel",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/jest": "^29.5.14",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-validator": "^7.2.1",
